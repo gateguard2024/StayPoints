@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Navy palette */
+  --navy-900: #060E1A;
+  --navy-800: #0A1628;
+  --navy-700: #112240;
+  --navy-600: #1A3355;
+  --navy-500: #243B55;
+
+  /* Gold accent */
+  --gold-bright: #F0B429;
+  --gold-primary: #C9993A;
+  --gold-muted: #8B6B25;
+
+  /* Status colors */
+  --green: #10B981;
+  --green-dim: #064E3B;
+  --red: #EF4444;
+  --purple: #8B5CF6;
+  --blue: #3B82F6;
+
+  /* Text */
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-muted: #475569;
+
+  /* Surfaces */
+  --border: #1E3A5F;
+  --card: #112240;
+  --card-hover: #1A3355;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-navy-800 text-slate-100 antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--navy-900);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--navy-500);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-muted);
+  }
+}
+
+@layer components {
+  /* ── Cards ── */
+  .sp-card {
+    @apply bg-navy-700 border border-[#1E3A5F] rounded-xl;
+  }
+
+  /* ── Buttons ── */
+  .btn-gold {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-full
+           font-bold text-sm text-navy-900 cursor-pointer border-0
+           bg-gradient-to-r from-gold-primary to-gold-bright
+           transition-all duration-150
+           hover:-translate-y-0.5 hover:shadow-lg hover:shadow-gold-primary/30
+           active:translate-y-0;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-full
+           font-bold text-sm text-slate-300 cursor-pointer
+           bg-transparent border border-[#1E3A5F]
+           transition-all duration-150
+           hover:border-gold-muted hover:text-slate-100;
+  }
+
+  /* ── Tier chips ── */
+  .tier-platinum { @apply bg-purple-500/20 text-purple-300 text-xs font-bold px-2 py-0.5 rounded-full; }
+  .tier-gold     { @apply bg-gold-primary/20 text-gold-bright text-xs font-bold px-2 py-0.5 rounded-full; }
+  .tier-silver   { @apply bg-slate-400/20 text-slate-300 text-xs font-bold px-2 py-0.5 rounded-full; }
+  .tier-bronze   { @apply bg-amber-700/20 text-amber-600 text-xs font-bold px-2 py-0.5 rounded-full; }
+
+  /* ── Progress bar ── */
+  .progress-bar {
+    @apply bg-navy-900 rounded-full h-2 overflow-hidden;
+  }
+  .progress-fill {
+    @apply h-full rounded-full bg-gradient-to-r from-gold-primary to-gold-bright transition-all duration-700;
+  }
+
+  /* ── Pill badges ── */
+  .pill-green  { @apply bg-emerald-500/15 text-emerald-400 text-xs font-bold px-2 py-0.5 rounded-full; }
+  .pill-gold   { @apply bg-gold-primary/15 text-gold-bright text-xs font-bold px-2 py-0.5 rounded-full; }
+  .pill-purple { @apply bg-purple-500/15 text-purple-400 text-xs font-bold px-2 py-0.5 rounded-full; }
+  .pill-blue   { @apply bg-blue-500/15 text-blue-400 text-xs font-bold px-2 py-0.5 rounded-full; }
+}
+
+@layer utilities {
+  .text-gold { color: var(--gold-bright); }
+  .glow-gold { box-shadow: 0 0 20px rgba(201, 153, 58, 0.3); }
+}
