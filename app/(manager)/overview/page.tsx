@@ -4,10 +4,18 @@ import CampaignCard from "@/components/manager/CampaignCard";
 
 export const metadata = { title: "Portfolio Overview" };
 
+type PortfolioStats = {
+  retention_rate: number;
+  points_issued_mtd: number;
+  active_residents: number;
+  engagement_pct: number;
+  renewals_this_quarter: number;
+};
+
 export default async function ManagerOverviewPage() {
   const supabase = createServerClient();
 
-  const [{ data: stats }, { data: atRisk }, { data: campaigns }] =
+  const [{ data: statsRaw }, { data: atRisk }, { data: campaigns }] =
     await Promise.all([
       supabase.from("portfolio_stats").select("*").single(),
       supabase
@@ -22,6 +30,8 @@ export default async function ManagerOverviewPage() {
         .order("created_at", { ascending: false })
         .limit(5),
     ]);
+
+  const stats = statsRaw as PortfolioStats | null;
 
   const statCards = [
     { icon: "🏠", value: `${stats?.retention_rate ?? 0}%`, label: "Retention Rate", change: "+4% vs last year", color: "green" },
