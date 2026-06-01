@@ -3,15 +3,27 @@ import { createServerClient } from "@/lib/supabase/server";
 
 export const metadata = { title: "Rewards Store" };
 
+type RewardRow = {
+  id: string;
+  name: string;
+  description: string;
+  points_cost: number;
+  icon?: string;
+  category: string;
+  is_active: boolean;
+};
+
+type ResidentBalance = { points_balance: number };
+
 export default async function RewardsPage() {
   const { userId } = await auth();
   const supabase = createServerClient();
 
-  const [{ data: resident }, { data: rewards }] = await Promise.all([
+  const [residentResult, rewardsResult] = await Promise.all([
     supabase
       .from("residents")
       .select("points_balance")
-      .eq("clerk_user_id", userId)
+      .eq("clerk_user_id", userId as string)
       .single(),
     supabase
       .from("rewards")
@@ -20,6 +32,8 @@ export default async function RewardsPage() {
       .order("points_cost", { ascending: true }),
   ]);
 
+  const resident = (residentResult.data as unknown) as ResidentBalance | null;
+  const rewards = (rewardsResult.data as unknown) as RewardRow[] | null;
   const balance = resident?.points_balance ?? 0;
 
   return (

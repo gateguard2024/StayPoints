@@ -1,6 +1,7 @@
 import { createServerClient } from "@/lib/supabase/server";
 import AtRiskList from "@/components/manager/AtRiskList";
 import CampaignCard from "@/components/manager/CampaignCard";
+import type { Database } from "@/types/database";
 
 export const metadata = { title: "Portfolio Overview" };
 
@@ -12,38 +13,42 @@ type PortfolioStats = {
   renewals_this_quarter: number;
 };
 
+type Resident = Database["public"]["Tables"]["residents"]["Row"];
+type Campaign = Database["public"]["Tables"]["campaigns"]["Row"];
+
 export default async function ManagerOverviewPage() {
   const supabase = createServerClient();
 
-  const [{ data: statsRaw }, { data: atRisk }, { data: campaigns }] =
-    await Promise.all([
-      supabase.from("portfolio_stats").select("*").single(),
-      supabase
-        .from("residents")
-        .select("*")
-        .eq("is_at_risk", true)
-        .order("lease_end_date", { ascending: true })
-        .limit(5),
-      supabase
-        .from("campaigns")
-        .select("*")
-        .order("created_at", { ascending: false })
-        .limit(5),
-    ]);
+  const [statsResult, atRiskResult, campaignsResult] = await Promise.all([
+    supabase.from("portfolio_stats").select("*").single(),
+    supabase
+      .from("residents")
+      .select("*")
+      .eq("is_at_risk", true)
+      .order("lease_end_date", { ascending: true })
+      .limit(5),
+    supabase
+      .from("campaigns")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(5),
+  ]);
 
-  const stats = statsRaw as PortfolioStats | null;
+  const stats = (statsResult.data as unknown) as PortfolioStats | null;
+  const atRisk = (atRiskResult.data as unknown) as Resident[] | null;
+  const campaigns = (campaignsResult.data as unknown) as Campaign[] | null;
 
   const statCards = [
-    { icon: "🏠", value: `${stats?.retention_rate ?? 0}%`, label: "Retention Rate", change: "+4% vs last year", color: "green" },
-    { icon: "⭐", value: `${((stats?.points_issued_mtd ?? 0) / 1000).toFixed(0)}K`, label: "Points Issued (MTD)", change: "+12% vs last month", color: "gold" },
-    { icon: "👥", value: stats?.active_residents ?? 0, label: "Active Residents", change: `${stats?.engagement_pct ?? 0}% engagement`, color: "blue" },
-    { icon: "🔄", value: stats?.renewals_this_quarter ?? 0, label: "Renewals This Quarter", change: "+7 vs prior quarter", color: "purple" },
+    { icon: "🏠", value: `${stats?.retention_rate ?? 0}%`,                            label: "Retention Rate",        change: "+4% vs last year",    color: "green"  },
+    { icon: "⭐", value: `${((stats?.points_issued_mtd ?? 0) / 1000).toFixed(0)}K`,   label: "Points Issued (MTD)",   change: "+12% vs last month",  color: "gold"   },
+    { icon: "👥", value: `${stats?.active_residents ?? 0}`,                            label: "Active Residents",      change: `${stats?.engagement_pct ?? 0}% engagement`, color: "blue" },
+    { icon: "🔄", value: `${stats?.renewals_this_quarter ?? 0}`,                       label: "Renewals This Quarter", change: "+7 vs prior quarter", color: "purple" },
   ];
 
   const colorMap: Record<string, string> = {
-    green: "border-t-emerald-500",
-    gold: "border-t-gold-primary",
-    blue: "border-t-blue-500",
+    green:  "border-t-emerald-500",
+    gold:   "border-t-gold-primary",
+    blue:   "border-t-blue-500",
     purple: "border-t-purple-500",
   };
 

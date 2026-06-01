@@ -10,24 +10,26 @@ type PointRule = {
   category: string;
   frequency: string;
   is_active: boolean;
-  icon: string;
+  icon?: string;
 };
 
 const CATEGORY_LABELS: Record<string, string> = {
-  recurring: "🔁 Recurring Monthly",
-  onetime: "🎯 Big One-Time Bonuses",
-  community: "🌆 Community Engagement",
-  referral: "🤝 Referrals",
+  recurring:  "🔁 Recurring Monthly",
+  onetime:    "🎯 Big One-Time Bonuses",
+  community:  "🌆 Community Engagement",
+  referral:   "🤝 Referrals",
 };
 
 export default async function EarnPage() {
   const supabase = createServerClient();
 
-  const { data: rules } = await supabase
+  const { data: raw } = await supabase
     .from("point_rules")
     .select("*")
     .eq("is_active", true)
     .order("points", { ascending: false });
+
+  const rules = (raw as unknown) as PointRule[] | null;
 
   const grouped = (rules ?? []).reduce<Record<string, PointRule[]>>((acc, rule) => {
     const cat = rule.category ?? "recurring";

@@ -12,16 +12,28 @@ const TIER_STYLES: Record<string, string> = {
 
 const RANK_MEDALS: Record<number, string> = { 1: "🥇", 2: "🥈", 3: "🥉" };
 
+type LeaderboardEntry = {
+  id: string;
+  clerk_user_id: string;
+  display_name: string;
+  initials: string;
+  unit_number: string;
+  tier: string;
+  points: number;
+  rank: number;
+};
+
 export default async function LeaderboardPage() {
   const { userId } = await auth();
   const supabase = createServerClient();
 
-  const { data: leaderboard } = await supabase
+  const { data: raw } = await supabase
     .from("leaderboard_monthly")
     .select("*")
     .order("rank", { ascending: true })
     .limit(25);
 
+  const leaderboard = (raw as unknown) as LeaderboardEntry[] | null;
   const myEntry = leaderboard?.find((r) => r.clerk_user_id === userId);
 
   return (
@@ -30,7 +42,7 @@ export default async function LeaderboardPage() {
       {leaderboard && leaderboard.length >= 3 && (
         <div className="sp-card p-6" style={{ background: "linear-gradient(135deg,#0F2545,#1A3355)" }}>
           <p className="text-center text-xs text-slate-400 font-semibold mb-5">
-            🏆 This Month's Top Residents
+            🏆 This Month&apos;s Top Residents
           </p>
           <div className="flex items-end justify-center gap-4 px-8">
             {/* 2nd */}
