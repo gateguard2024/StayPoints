@@ -10,7 +10,6 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "img.clerk.com" },
     ],
   },
-  serverExternalPackages: ["@clerk/nextjs", "@clerk/backend"],
 };
 
 export default nextConfig;

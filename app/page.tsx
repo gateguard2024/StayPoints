@@ -1,16 +1,9 @@
-import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 /**
- * Root route — redirect authenticated users to their dashboard,
- * unauthenticated users to sign-in.
+ * Root route — send everyone to /demo for the public demo.
+ * Authenticated routing is handled inside /dashboard layout.
  */
-export default async function RootPage() {
-  const { userId } = await auth();
-
-  if (userId) {
-    redirect("/dashboard");
-  } else {
-    redirect("/sign-in");
-  }
+export default function RootPage() {
+  redirect("/demo");
 }
