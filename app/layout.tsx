@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 
 const inter = Inter({
@@ -46,12 +45,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <html lang="en" className={inter.variable}>
-        <body className="min-h-screen bg-navy-800 text-slate-100">
-          {children}
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en" className={inter.variable}>
+      <body className="min-h-screen bg-navy-800 text-slate-100">
+        {children}
+      </body>
+    </html>
   );
 }
