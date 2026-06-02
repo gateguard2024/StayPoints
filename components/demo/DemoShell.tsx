@@ -6,15 +6,16 @@ import { usePathname } from "next/navigation";
 import { DEMO_RESIDENT, DEMO_MANAGER } from "@/lib/demo/data";
 
 type Mode = "resident" | "manager";
+type NavItem = { href: string; icon: string; label: string; badge?: string };
 
-const RESIDENT_NAV = [
+const RESIDENT_NAV: NavItem[] = [
   { href: "/demo/dashboard",   icon: "🏠", label: "Dashboard"      },
   { href: "/demo/earn",        icon: "⭐", label: "Ways to Earn", badge: "9" },
   { href: "/demo/rewards",     icon: "🎁", label: "Rewards Store"  },
   { href: "/demo/leaderboard", icon: "🏆", label: "Leaderboard"    },
 ];
 
-const MANAGER_NAV = [
+const MANAGER_NAV: NavItem[] = [
   { href: "/demo/manager",     icon: "📊", label: "Overview"    },
   { href: "/demo/manager",     icon: "👥", label: "Residents"   },
   { href: "/demo/manager",     icon: "🚀", label: "Campaigns"   },
@@ -103,7 +104,7 @@ export default function DemoShell({ children }: { children: React.ReactNode }) {
               >
                 <span className="w-5 text-center text-base">{item.icon}</span>
                 {item.label}
-                {"badge" in item && item.badge && (
+                {item.badge && (
                   <span className="ml-auto text-xs font-bold px-1.5 py-0.5 rounded-full"
                         style={{ background: "#C9993A", color: "#060E1A" }}>
                     {item.badge}
