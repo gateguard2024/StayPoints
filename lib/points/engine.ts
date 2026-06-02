@@ -58,7 +58,8 @@ export async function awardPoints({
   if (txError) return { success: false, error: txError.message };
 
   // Update resident balance (use RPC for atomicity)
-  const { error: balanceError } = await supabase.rpc("increment_points_balance", {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { error: balanceError } = await (supabase as any).rpc("increment_points_balance", {
     p_resident_id: residentId,
     p_points: pointsToAward,
   });
@@ -66,7 +67,8 @@ export async function awardPoints({
   if (balanceError) return { success: false, error: balanceError.message };
 
   // Update tier based on new balance
-  await supabase.rpc("update_resident_tier", { p_resident_id: residentId });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  await (supabase as any).rpc("update_resident_tier", { p_resident_id: residentId });
 
   return { success: true, pointsAwarded: pointsToAward };
 }
@@ -107,7 +109,8 @@ export async function redeemPoints({
 
   if (error) return { success: false, error: error.message };
 
-  await supabase.rpc("increment_points_balance", {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  await (supabase as any).rpc("increment_points_balance", {
     p_resident_id: residentId,
     p_points: -points,
   });
