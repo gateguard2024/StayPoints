@@ -1,4 +1,11 @@
-// Middleware disabled — auth is handled at the layout level.
-// Clerk's Edge Runtime modules are incompatible with Vercel's bundler.
-// This empty matcher prevents Vercel from deploying a middleware Edge Function.
-export const config = { matcher: [] };
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
+export function middleware(_req: NextRequest) {
+  return NextResponse.next();
+}
+
+// Match a path that never exists — keeps Vercel's router happy while middleware is a no-op
+export const config = {
+  matcher: ["/__disabled__"],
+};
