@@ -45,7 +45,8 @@ export async function awardPoints({
   if (pointsToAward <= 0) return { success: false, error: "No points to award" };
 
   // Insert transaction
-  const { error: txError } = await supabase.from("point_transactions").insert({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { error: txError } = await (supabase.from("point_transactions") as any).insert({
     resident_id: residentId,
     points: pointsToAward,
     type: "earn",
@@ -94,7 +95,8 @@ export async function redeemPoints({
     return { success: false, error: "Insufficient points" };
   }
 
-  const { error } = await supabase.from("point_transactions").insert({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { error } = await (supabase.from("point_transactions") as any).insert({
     resident_id: residentId,
     points: -points,
     type: "redeem",

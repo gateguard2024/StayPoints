@@ -50,7 +50,8 @@ export async function POST(req: Request) {
     const displayName = [first_name, last_name].filter(Boolean).join(" ") || email;
 
     const supabase = createAdminClient();
-    await supabase.from("residents").insert({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await (supabase.from("residents") as any).insert({
       clerk_user_id: id,
       email,
       display_name: displayName,
