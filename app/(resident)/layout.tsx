@@ -12,7 +12,7 @@ export default async function ResidentLayout({
   if (!userId) redirect("/sign-in");
 
   return (
-    <ClerkProvider>
+    <ClerkProvider afterSignOutUrl="/sign-in">
       <AppShell mode="resident">{children}</AppShell>
     </ClerkProvider>
   );

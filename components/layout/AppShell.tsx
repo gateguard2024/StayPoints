@@ -88,7 +88,7 @@ export default function AppShell({ mode, children }: AppShellProps) {
         {/* Footer */}
         <div className="p-3 border-t border-[#1E3A5F]">
           <div className="flex items-center gap-3 px-3 py-2">
-            <UserButton afterSignOutUrl="/sign-in" />
+            <UserButton />
             <div className="min-w-0">
               <p className="text-xs font-semibold truncate text-slate-300">My Account</p>
               <p className="text-xs text-gold-primary font-semibold">

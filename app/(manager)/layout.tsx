@@ -13,7 +13,7 @@ export default async function ManagerLayout({
 
   // TODO: check manager role via Clerk org/metadata
   return (
-    <ClerkProvider>
+    <ClerkProvider afterSignOutUrl="/sign-in">
       <AppShell mode="manager">{children}</AppShell>
     </ClerkProvider>
   );
