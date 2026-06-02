@@ -33,12 +33,13 @@ export async function awardPoints({
   // Look up point rule if not custom
   let pointsToAward = points ?? 0;
   if (event !== "custom") {
-    const { data: rule } = await supabase
+    const ruleResult = await supabase
       .from("point_rules")
       .select("points")
       .eq("event_key", event)
       .eq("is_active", true)
       .single();
+    const rule = (ruleResult.data as unknown) as { points: number } | null;
     pointsToAward = rule?.points ?? pointsToAward;
   }
 
@@ -85,11 +86,12 @@ export async function redeemPoints({
   const supabase = createAdminClient();
 
   // Check balance
-  const { data: resident } = await supabase
+  const balanceResult = await supabase
     .from("residents")
     .select("points_balance")
     .eq("id", residentId)
     .single();
+  const resident = (balanceResult.data as unknown) as { points_balance: number } | null;
 
   if ((resident?.points_balance ?? 0) < points) {
     return { success: false, error: "Insufficient points" };
