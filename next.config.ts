@@ -1,13 +1,7 @@
 import type { NextConfig } from "next";
-// @ts-ignore — next-pwa has no types bundle
-const withPWA = require("next-pwa")({
-  dest: "public",
-  register: true,
-  skipWaiting: true,
-  disable: process.env.NODE_ENV === "development",
-  buildExcludes: [/middleware-manifest\.json$/],
-});
 
+// next-pwa disabled — its webpack plugin corrupts the Edge Runtime middleware bundle.
+// Re-enable once Clerk + Vercel Edge Runtime middleware is stable.
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
@@ -23,4 +17,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withPWA(nextConfig);
+export default nextConfig;
