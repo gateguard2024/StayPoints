@@ -20,10 +20,12 @@ export async function POST(req: Request) {
 
   const supabase = createServerClient();
 
-  const [{ data: resident }, { data: reward }] = await Promise.all([
+  const [residentResult, rewardResult] = await Promise.all([
     supabase.from("residents").select("id, points_balance").eq("clerk_user_id", userId).single(),
     supabase.from("rewards").select("id, points_cost, name").eq("id", parsed.data.rewardId).eq("is_active", true).single(),
   ]);
+  const resident = (residentResult.data as unknown) as { id: string; points_balance: number } | null;
+  const reward = (rewardResult.data as unknown) as { id: string; points_cost: number; name: string } | null;
 
   if (!resident) return NextResponse.json({ error: "Resident not found" }, { status: 404 });
   if (!reward) return NextResponse.json({ error: "Reward not found or unavailable" }, { status: 404 });

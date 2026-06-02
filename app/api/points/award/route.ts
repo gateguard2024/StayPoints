@@ -26,11 +26,12 @@ export async function POST(req: Request) {
 
   // Get resident ID from Clerk user
   const supabase = createServerClient();
-  const { data: resident } = await supabase
+  const residentResult = await supabase
     .from("residents")
     .select("id")
     .eq("clerk_user_id", userId)
     .single();
+  const resident = (residentResult.data as unknown) as { id: string } | null;
 
   if (!resident) return NextResponse.json({ error: "Resident not found" }, { status: 404 });
 
