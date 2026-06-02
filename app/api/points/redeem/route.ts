@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
 
-  const supabase = createServerClient();
+  const supabase = await createServerClient();
 
   const [residentResult, rewardResult] = await Promise.all([
     supabase.from("residents").select("id, points_balance").eq("clerk_user_id", userId).single(),

@@ -25,7 +25,7 @@ type LeaderboardEntry = {
 
 export default async function LeaderboardPage() {
   const { userId } = await auth();
-  const supabase = createServerClient();
+  const supabase = await createServerClient();
 
   const { data: raw } = await supabase
     .from("leaderboard_monthly")

@@ -25,7 +25,7 @@ export async function POST(req: Request) {
   }
 
   // Get resident ID from Clerk user
-  const supabase = createServerClient();
+  const supabase = await createServerClient();
   const residentResult = await supabase
     .from("residents")
     .select("id")

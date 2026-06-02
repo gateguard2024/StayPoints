@@ -5,8 +5,8 @@ import type { Database } from "@/types/database";
 /**
  * Server-side Supabase client for Server Components, Route Handlers, and Server Actions.
  */
-export function createServerClient() {
-  const cookieStore = cookies();
+export async function createServerClient() {
+  const cookieStore = await cookies();
 
   return _createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

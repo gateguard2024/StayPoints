@@ -17,7 +17,7 @@ type Resident = Database["public"]["Tables"]["residents"]["Row"];
 type Campaign = Database["public"]["Tables"]["campaigns"]["Row"];
 
 export default async function ManagerOverviewPage() {
-  const supabase = createServerClient();
+  const supabase = await createServerClient();
 
   const [statsResult, atRiskResult, campaignsResult] = await Promise.all([
     supabase.from("portfolio_stats").select("*").single(),

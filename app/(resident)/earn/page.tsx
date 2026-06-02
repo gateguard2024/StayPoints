@@ -21,7 +21,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 export default async function EarnPage() {
-  const supabase = createServerClient();
+  const supabase = await createServerClient();
 
   const { data: raw } = await supabase
     .from("point_rules")

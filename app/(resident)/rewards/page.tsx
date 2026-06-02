@@ -17,7 +17,7 @@ type ResidentBalance = { points_balance: number };
 
 export default async function RewardsPage() {
   const { userId } = await auth();
-  const supabase = createServerClient();
+  const supabase = await createServerClient();
 
   const [residentResult, rewardsResult] = await Promise.all([
     supabase

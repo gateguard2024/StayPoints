@@ -27,7 +27,7 @@ type PointRule = {
 
 export default async function DashboardPage() {
   const { userId } = await auth();
-  const supabase = createServerClient();
+  const supabase = await createServerClient();
 
   const [residentResult, earnResult] = await Promise.all([
     supabase
