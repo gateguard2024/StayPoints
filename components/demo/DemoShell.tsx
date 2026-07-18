@@ -38,31 +38,39 @@ export default function DemoShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-screen">
-      {/* Demo banner */}
-      <div className="fixed top-0 left-0 right-0 z-[200] flex items-center justify-center gap-3 px-4 py-2"
-           style={{ background: "linear-gradient(90deg,#C9993A,#F0B429)", color: "#060E1A" }}>
+      {/* ── Demo banner ── */}
+      <div
+        className="fixed top-0 left-0 right-0 z-[200] flex items-center justify-center gap-3 px-4 py-2"
+        style={{ background: "linear-gradient(90deg,#C9993A,#F0B429)", color: "#060E1A" }}
+      >
         <span className="text-sm font-bold">⭐ StayPoints — Interactive Demo</span>
-        <span className="text-xs opacity-70">|</span>
-        <span className="text-xs font-semibold opacity-80">No login required · All data is illustrative</span>
-        <a href="mailto:rfeldman@gateguard.co"
-           className="ml-4 text-xs font-bold underline hover:opacity-80">
+        <span className="text-xs opacity-60">|</span>
+        <span className="text-xs font-semibold opacity-75">No login required · All data is illustrative</span>
+        <a
+          href="mailto:rfeldman@gateguard.co"
+          className="ml-4 text-xs font-bold underline hover:opacity-75"
+        >
           Request Access →
         </a>
       </div>
 
-      {/* Sidebar */}
-      <aside className="w-56 border-r flex flex-col fixed top-8 left-0 bottom-0 z-50"
-             style={{ background: "#060E1A", borderColor: "#1E3A5F" }}>
+      {/* ── Sidebar (stays dark for contrast) ── */}
+      <aside
+        className="w-56 flex flex-col fixed top-8 left-0 bottom-0 z-50"
+        style={{ background: "#0F1E30", borderRight: "1px solid #1C3050" }}
+      >
         {/* Logo */}
-        <div className="px-5 py-5 border-b" style={{ borderColor: "#1E3A5F" }}>
+        <div className="px-5 py-5" style={{ borderBottom: "1px solid #1C3050" }}>
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center text-xl shadow-md"
-                 style={{ background: "linear-gradient(135deg,#C9993A,#F0B429)", boxShadow: "0 4px 12px rgba(201,153,58,0.25)" }}>
+            <div
+              className="w-9 h-9 rounded-xl flex items-center justify-center text-xl"
+              style={{ background: "linear-gradient(135deg,#C9993A,#F0B429)", boxShadow: "0 4px 12px rgba(201,153,58,0.3)" }}
+            >
               ⭐
             </div>
             <div>
               <p className="text-sm font-black text-white">StayPoints</p>
-              <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#C9993A" }}>
+              <p className="text-xs font-bold uppercase tracking-wider" style={{ color: "#F0B429" }}>
                 {mode === "manager" ? "Manager" : "Resident"}
               </p>
             </div>
@@ -70,16 +78,16 @@ export default function DemoShell({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Mode toggle */}
-        <div className="px-3 py-3 border-b" style={{ borderColor: "#1E3A5F" }}>
-          <div className="flex rounded-lg p-0.5" style={{ background: "#0A1628" }}>
+        <div className="px-3 py-3" style={{ borderBottom: "1px solid #1C3050" }}>
+          <div className="flex rounded-lg p-0.5" style={{ background: "#0B1724" }}>
             {(["resident", "manager"] as Mode[]).map((m) => (
               <button
                 key={m}
                 onClick={() => setMode(m)}
                 className="flex-1 py-1.5 rounded-md text-xs font-bold capitalize transition-all"
                 style={{
-                  background: mode === m ? "#112240" : "transparent",
-                  color: mode === m ? "#F1F5F9" : "#475569",
+                  background: mode === m ? "#162540" : "transparent",
+                  color: mode === m ? "#F1F5F9" : "#6A839A",
                 }}
               >
                 {m === "resident" ? "🏠 Resident" : "📊 Manager"}
@@ -98,15 +106,17 @@ export default function DemoShell({ children }: { children: React.ReactNode }) {
                 href={item.href}
                 className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium transition-all"
                 style={{
-                  background: isActive ? "linear-gradient(135deg,#1A3355,#243B55)" : "transparent",
-                  color: isActive ? "#F0B429" : "#94A3B8",
+                  background: isActive ? "linear-gradient(135deg,#1E3355,#243B55)" : "transparent",
+                  color: isActive ? "#F0B429" : "#7A90A8",
                 }}
               >
                 <span className="w-5 text-center text-base">{item.icon}</span>
                 {item.label}
                 {item.badge && (
-                  <span className="ml-auto text-xs font-bold px-1.5 py-0.5 rounded-full"
-                        style={{ background: "#C9993A", color: "#060E1A" }}>
+                  <span
+                    className="ml-auto text-xs font-bold px-1.5 py-0.5 rounded-full"
+                    style={{ background: "#C9993A", color: "#060E1A" }}
+                  >
                     {item.badge}
                   </span>
                 )}
@@ -116,10 +126,12 @@ export default function DemoShell({ children }: { children: React.ReactNode }) {
         </nav>
 
         {/* User pill */}
-        <div className="p-3 border-t" style={{ borderColor: "#1E3A5F" }}>
+        <div className="p-3" style={{ borderTop: "1px solid #1C3050" }}>
           <div className="flex items-center gap-3 px-3 py-2">
-            <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0"
-                 style={{ background: "linear-gradient(135deg,#8B6B25,#C9993A)", color: "#060E1A" }}>
+            <div
+              className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0"
+              style={{ background: "linear-gradient(135deg,#8B6B25,#C9993A)", color: "#060E1A" }}
+            >
               {mode === "manager" ? DEMO_MANAGER.initials : DEMO_RESIDENT.initials}
             </div>
             <div className="min-w-0">
@@ -134,28 +146,33 @@ export default function DemoShell({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
 
-      {/* Main */}
+      {/* ── Main ── */}
       <div className="flex-1 ml-56 flex flex-col mt-8">
         {/* Topbar */}
-        <header className="sticky top-8 z-40 px-7 py-3.5 flex items-center justify-between border-b"
-                style={{ background: "#060E1A", borderColor: "#1E3A5F" }}>
+        <header
+          className="sticky top-8 z-40 px-7 py-3.5 flex items-center justify-between"
+          style={{ background: "#FFFFFF", borderBottom: "1px solid #DDE5EF", boxShadow: "0 1px 4px rgba(15,30,53,0.06)" }}
+        >
           <div>
-            <h1 className="text-base font-bold text-white">{title}</h1>
-            <p className="text-xs" style={{ color: "#94A3B8" }}>{subtitle}</p>
+            <h1 className="text-base font-bold" style={{ color: "#0F1E35" }}>{title}</h1>
+            <p className="text-xs" style={{ color: "#56687A" }}>{subtitle}</p>
           </div>
           {mode === "resident" && (
-            <div className="flex items-center gap-2 rounded-full px-4 py-2 border"
-                 style={{ background: "#112240", borderColor: "#8B6B25" }}>
+            <div
+              className="flex items-center gap-2 rounded-full px-4 py-2"
+              style={{ background: "#FEF9EC", border: "1px solid #E8C96A" }}
+            >
               <span style={{ color: "#F0B429" }}>⭐</span>
-              <span className="text-sm font-black" style={{ color: "#F0B429" }}>
+              <span className="text-sm font-black" style={{ color: "#8B6B25" }}>
                 {DEMO_RESIDENT.points_balance.toLocaleString()}
               </span>
-              <span className="text-xs" style={{ color: "#94A3B8" }}>pts</span>
+              <span className="text-xs" style={{ color: "#56687A" }}>pts</span>
             </div>
           )}
         </header>
 
-        <main className="flex-1 p-7 overflow-auto" style={{ background: "#0A1628" }}>
+        {/* Page content */}
+        <main className="flex-1 p-7 overflow-auto" style={{ background: "#EEF2F7" }}>
           {children}
         </main>
       </div>

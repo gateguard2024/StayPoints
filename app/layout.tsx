@@ -46,7 +46,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="min-h-screen bg-navy-800 text-slate-100">
+      <body className="min-h-screen" style={{ background: "var(--page-bg)", color: "var(--text-primary)" }}>
         {children}
       </body>
     </html>
